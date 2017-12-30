@@ -15,12 +15,13 @@ class Train(object):
             save_best_only = True
         )
         m.fit_generator(
-            generator        = g.train(),
+            generator        = g.train(32),
             steps_per_epoch  = 100,
             epochs           = 30,
-            validation_data  = g.valid(),
+            validation_data  = g.valid(32),
             validation_steps = 10,
-            callbacks        = [c]
+            callbacks        = [c],
+            verbose          = 2
         )
 
 
