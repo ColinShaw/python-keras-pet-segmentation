@@ -53,8 +53,6 @@ class Generator(object):
                 label = self.__train[i][0]
                 label = self.__augment_label(label)
                 labels.append(label)
-            #print(labels)
-            #print(features)
             yield np.array([features,labels])
 
     def valid(self, batch_size):
