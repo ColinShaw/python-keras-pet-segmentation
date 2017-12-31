@@ -1,5 +1,5 @@
 import os
-import numpy as np
+import numpy  as np
 from   loader import Loader
 
 
@@ -16,30 +16,34 @@ class Oxford(Loader):
         for image in images:
             image = os.path.splitext(image)[0]
             feature = self.load_image('data/oxford_iiit/images/{}.jpg'.format(image))
-            label   = self.load_image('data/oxford_iiit/trimaps/{}.png'.format(image))
-            label   = np.reshape(label, (224,224,1))
-            self.__data.append((feature,label))
+            label = self.load_image('data/oxford_iiit/trimaps/{}.png'.format(image))
+            label = np.reshape(label, (224,224,1))
+            self.__data.append((feature, label))
 
     def __scale_label(self, label):
-        label[label>2]   = 255
-        label[label<255] = 0
+        label[label > 2] = 255
+        label[label < 255] = 0
         return label
 
     def train(self):
-        data = features = labels = []
-        for i in range(0,200):
+        data     = [] 
+        features = [] 
+        labels   = []
+        for i in range(0, 200):
             feature = self.__data[i][0]
             label   = self.__data[i][1]
             label   = self.__scale_label(label)
-            data.append((feature,label))
+            data.append((feature, label))
         return data
 
     def valid(self):
-        data = features = labels = []
-        for i in range(200,250):
+        data     = []
+        features = [] 
+        labels   = []
+        for i in range(200, 250):
             feature = self.__data[i][0]
             label   = self.__data[i][1]
             label   = self.__scale_label(label)
-            data.append((feature,label))
+            data.append((feature, label))
         return data
 

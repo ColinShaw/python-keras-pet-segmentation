@@ -28,7 +28,7 @@ class Generator(object):
     def __augment_translation(self, image):
         x = np.random.uniform(-40, 40)
         y = np.random.uniform(-40, 40)
-        scale = np.float32([[1,0,x],[0,y,0]])
+        scale = np.float32([[1,0,x], [0,y,0]])
         image = cv2.warpAffine(image, scale, (224,224))
         return image
 
@@ -51,7 +51,8 @@ class Generator(object):
 
     def train(self, batch_size):
         while True:
-            labels = features = []
+            labels   = []
+            features = []
             random.shuffle(self.__train)
             for i in range(batch_size):
                 feature = self.__train[i][0]
@@ -60,11 +61,14 @@ class Generator(object):
                 label = self.__train[i][0]
                 label = self.__augment_label(label)
                 labels.append(label)
-            yield np.array([features,labels])
+            y = np.array([features, labels])
+            print(y.shape)
+            yield y
 
     def valid(self, batch_size):
         while True:
-            labels = features = []
+            labels   = []  
+            features = []
             random.shuffle(self.__valid)
             for i in range(batch_size):
                 feature = self.__valid[i][0]
@@ -73,5 +77,6 @@ class Generator(object):
                 label = self.__valid[i][0]
                 label = self.__augment_label(label)
                 labels.append(label)
-            yield np.array([features,labels])
+            y = np.array([features, labels])
+            yield y
 

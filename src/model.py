@@ -26,11 +26,11 @@ class Model(object):
         a1 = Add()([t4, c1])
         t1 = Conv2DTranspose(1,16,strides=(8,8))(a1)
 
-        model = KerasModel(inputs=vgg16.input, outputs=t1)
-        model.compile(
+        m = KerasModel(inputs=vgg16.input, outputs=t1)
+        m.compile(
             optimizer = Adam(lr=1e-5), 
             loss      = 'categorical_crossentropy', 
             metrics   = ['accuracy']
         )
-        return model
+        return m
 
