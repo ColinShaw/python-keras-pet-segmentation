@@ -20,8 +20,7 @@ class Train(object):
             epochs           = 30,
             validation_data  = g.valid(32),
             validation_steps = 10,
-            callbacks        = [c],
-            verbose          = 2
+            callbacks        = [c]
         )
 
 
