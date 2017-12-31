@@ -29,27 +29,27 @@ Some similar concept reference implementations might be:
 
 ### Mechanism of operation
 
-Skip-layer networks are somewhat similar to U-nets for segmentation, but simpler.  Let's
-start with a visual of the VGG16 layers as defined in the Keras model:
+We start with the stock VGG16 trained on ImageNet including the fully connected 
+top layers.  This has a summary like this:
 
 ![VGG16 stock layers](images/vgg16_full.png)
 
 Here we have the typical full VGG16 model trained on ImageNet with the top end consisting
 of fully connected layers.  First, we take the top end off, then we create transpose
 convolution layers through the network added together to reinforce features at different
-scales. A diagram of the idea would be:
-
-![Skip-layer diagram](images/skiplayer.png)
-
-Once the top end is peeled off VGG16 and these connections are added, the summary 
-from Keras looks like this:
+scales.  This results in a summary like this:
 
 ![VGG16 skip layer](images/vgg16_skiplayer.png)
 
-As you can see, we froze the existing VGG16 convolutional layer weights, as these 
-are great, and we have a fairly small number of trainable parameters arising
-from our transpose convolution layers.  This means pretty quick training, particularly
-since these are near the top end!
+The idea is to freeze the weights of the pre-trained VGG16 convolutional layers since
+these already are quite good at feature selection across a wide range of features of
+varying scale.  What we do is train the new transpose convolution layers so that we
+can make use of them for showing what regions have the features related to the 
+segmentation we want.
+
+There are a lot of variations on this general idea, as is obvious looking at some
+of the links mentioned above.  One thing that is critical is to use a good metric
+for loss so that the model trains well.
 
 
 
