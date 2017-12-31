@@ -47,7 +47,5 @@ class Model(object):
             metrics   = [i.iou]
         )
 
-        m.summary()
-
         return m
 
