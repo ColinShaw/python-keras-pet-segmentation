@@ -1,7 +1,7 @@
-from   keras.applications import VGG16
-from   keras.layers       import Conv2D, Conv2DTranspose, Add
-from   keras.models       import Model as KerasModel
-from   keras.optimizers   import Adam
+from keras.applications import VGG16
+from keras.layers       import Conv2D, Conv2DTranspose, Add
+from keras.models       import Model as KerasModel
+from keras.optimizers   import Adam
 
 
 class Model(object):

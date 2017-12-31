@@ -1,9 +1,10 @@
-from oxford     import Oxford
-from random     import shuffle
-from scipy.misc import imrotate
-import numpy as np
 import random
 import cv2 
+import numpy as np
+from   keras.applications.imagenet_utils import preprocess_input
+from   scipy.misc                        import imrotate
+from   random                            import shuffle
+from   oxford                            import Oxford
 
 
 class Generator(object):
@@ -31,15 +32,21 @@ class Generator(object):
         image = cv2.warpAffine(image, scale, (224,224))
         return image
 
+    def __scale_data(self, image):
+        image = preprocess_input(image.astype(np.float32))
+        return image
+
     def __augment_feature(self, image):
         image = self.__augment_rotation(image)
         image = self.__augment_translation(image)
         image = self.__augment_luminance(image)
+        image = self.__scale_data(image)
         return image
  
     def __augment_label(self, image):
         image = self.__augment_rotation(image)
         image = self.__augment_translation(image)
+        image = self.__scale_data(image)
         return image
 
     def train(self, batch_size):

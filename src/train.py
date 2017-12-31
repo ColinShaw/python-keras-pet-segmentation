@@ -1,6 +1,6 @@
-from src.model       import Model
-from src.generator   import Generator
 from keras.callbacks import ModelCheckpoint
+from model           import Model
+from generator       import Generator
 
 
 class Train(object):

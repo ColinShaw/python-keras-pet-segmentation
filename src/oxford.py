@@ -1,6 +1,6 @@
-from loader import Loader
-import numpy as np
 import os
+import numpy as np
+from   loader import Loader
 
 
 class Oxford(Loader):
@@ -23,7 +23,6 @@ class Oxford(Loader):
     def __scale_label(self, label):
         label[label>2]   = 255
         label[label<255] = 0
-        print(label)
         return label
 
     def train(self):
