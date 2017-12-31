@@ -45,7 +45,11 @@ The idea is to freeze the weights of the pre-trained VGG16 convolutional layers 
 these already are quite good at feature selection across a wide range of features of
 varying scale.  What we do is train the new transpose convolution layers so that we
 can make use of them for showing what regions have the features related to the 
-segmentation we want.
+segmentation we want.  As you can see, the number of trainable parameters is actually
+fairly small.  Moreover, these trainable parameters are all at the top end of the 
+model, so we don't have to backpropogate all that much to train it.  This is one of the 
+reasons the skip-layer approach to segmentation trains quickly.  The real value is in
+being able to take advantage of the pre-trained VGG16 model.
 
 There are a lot of variations on this general idea, as is obvious looking at some
 of the links mentioned above.  One thing that is critical is to use a good metric
