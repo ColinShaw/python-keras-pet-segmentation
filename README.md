@@ -1,9 +1,9 @@
 # Pet Image Segmentation in Keras
 
 This is a skip-layer semantic model built in Keras based on pre-trained VGG16 
-with final training on cat images.  The images come from loads in the `data` 
-directory.  A real nice data set to train with is the Oxford-IIIT pet data
-set constrained to cats ([here](http://www.robots.ox.ac.uk/~vgg/data/pets/)).
+with final training on pet images.  A real nice data set to train with is the 
+Oxford-IIIT pet data set.  Drop the data set into the `/data` directory and 
+look in the code to see how it loads it.
 
 
 

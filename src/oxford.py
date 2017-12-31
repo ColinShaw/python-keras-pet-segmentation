@@ -21,6 +21,9 @@ class Oxford(Loader):
             self.__data.append((feature,label))
 
     def __scale_label(self, label):
+        label[label>2]   = 255
+        label[label<255] = 0
+        print(label)
         return label
 
     def train(self):
