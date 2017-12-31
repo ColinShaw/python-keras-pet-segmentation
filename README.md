@@ -1,4 +1,4 @@
-# Cat Detector
+# Pet Image Segmentation in Keras
 
 This is a skip-layer semantic model built in Keras based on pre-trained VGG16 
 with final training on cat images.  The images come from loads in the `data` 
@@ -54,3 +54,8 @@ since these are near the top end!
 
 
 ### Code
+
+There is a controller, `main.py`, that uses the classes in `/src`.  The
+way it is broken up should be pretty obvious and reasonably easy to extend
+should someone want to use some other data set.
+

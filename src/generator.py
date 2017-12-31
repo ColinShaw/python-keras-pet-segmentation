@@ -43,26 +43,30 @@ class Generator(object):
         return image
 
     def train(self, batch_size):
-        labels = features = []
-        random.shuffle(self.__train)
-        for i in range(batch_size):
-            feature = self.__train[i][0]
-            feature = self.__augment_feature(feature)
-            features.append(feature)
-            label = self.__train[i][0]
-            label = self.__augment_label(label)
-            labels.append(label)
-        yield features, labels
+        while True:
+            labels = features = []
+            random.shuffle(self.__train)
+            for i in range(batch_size):
+                feature = self.__train[i][0]
+                feature = self.__augment_feature(feature)
+                features.append(feature)
+                label = self.__train[i][0]
+                label = self.__augment_label(label)
+                labels.append(label)
+            #print(labels)
+            #print(features)
+            yield np.array([features,labels])
 
     def valid(self, batch_size):
-        labels = features = []
-        random.shuffle(self.__valid)
-        for i in range(batch_size):
-            feature = self.__valid[i][0]
-            feature = self.__augment_feature(feature)
-            features.append(feature)
-            label = self.__valid[i][0]
-            label = self.__augment_label(label)
-            labels.append(label)
-        yield features, labels
+        while True:
+            labels = features = []
+            random.shuffle(self.__valid)
+            for i in range(batch_size):
+                feature = self.__valid[i][0]
+                feature = self.__augment_feature(feature)
+                features.append(feature)
+                label = self.__valid[i][0]
+                label = self.__augment_label(label)
+                labels.append(label)
+            yield np.array([features,labels])
 

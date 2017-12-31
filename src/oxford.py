@@ -1,20 +1,24 @@
 from loader import Loader
-import random
+import numpy as np
+import os
 
 
 class Oxford(Loader):
 
     def __init__(self):
         Loader.__init__(self)
+        self.__data = []
         self.__load_data()
 
     def __load_data(self):
-        features = self.load_images('data/oxford_iiit/images/*.jpg')
-        labels   = self.load_images('data/oxford_iiit/trimaps/*.jpg')
-        self.__data = []
-        for i in range(len(features)):
-            self.__data.append((features[i],labels[i]))
-        random.shuffle(self.__data)
+        dirlist = os.listdir('data/oxford_iiit/images')
+        images = [f for f in dirlist if 'jpg' in f]
+        for image in images:
+            image = os.path.splitext(image)[0]
+            feature = self.load_image('data/oxford_iiit/images/{}.jpg'.format(image))
+            label   = self.load_image('data/oxford_iiit/trimaps/{}.png'.format(image))
+            label   = np.reshape(label, (224,224,1))
+            self.__data.append((feature,label))
 
     def __scale_label(self, label):
         return label
