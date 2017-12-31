@@ -14,16 +14,15 @@ class Oxford(Loader):
         dirlist = os.listdir('data/oxford_iiit/images')
         images = [f for f in dirlist if 'jpg' in f]
         for image in images:
-            image = os.path.splitext(image)[0]
+            image   = os.path.splitext(image)[0]
             feature = self.load_image('data/oxford_iiit/images/{}.jpg'.format(image))
-            label = self.load_image('data/oxford_iiit/trimaps/{}.png'.format(image))
-            label = np.reshape(label, (224,224,1))
+            label   = self.load_image('data/oxford_iiit/trimaps/{}.png'.format(image))
             self.__data.append((feature, label))
 
     def __scale_label(self, label):
-        label[label > 2] = 255
-        label[label < 255] = 0
-        return label
+        label[label > 2]   = 1.0
+        label[label < 255] = 0.0
+        return label.astype(np.float32)
 
     def train(self):
         data     = [] 
