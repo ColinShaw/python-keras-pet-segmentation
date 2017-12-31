@@ -2,6 +2,7 @@ from keras.applications import VGG16
 from keras.layers       import Conv2D, Conv2DTranspose, Add
 from keras.models       import Model as KerasModel
 from keras.optimizers   import Adam
+from iou                import IOU
 
 
 class Model(object):
@@ -27,10 +28,11 @@ class Model(object):
         t1 = Conv2DTranspose(1,16,strides=(8,8))(a1)
 
         m = KerasModel(inputs=vgg16.input, outputs=t1)
+        i = IOU(1.0)
         m.compile(
             optimizer = Adam(lr=1e-5), 
-            loss      = 'categorical_crossentropy', 
-            metrics   = ['accuracy']
+            loss      = i.loss, 
+            metrics   = [i.iou]
         )
         return m
 
