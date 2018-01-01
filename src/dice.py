@@ -1,12 +1,12 @@
 from keras import backend as K
 
 
-class IOU(object):
+class Dice(object):
 
     def __init__(self, constant):
         self.constant = constant
 
-    def iou(self, truth, prediction):
+    def dice(self, truth, prediction):
         flat_truth      = K.flatten(truth)
         flat_prediction = K.flatten(prediction)
         intersection    = K.sum(flat_truth * flat_prediction)
@@ -14,9 +14,9 @@ class IOU(object):
         sum_truth       = K.sum(flat_truth)
         sum_prediction  = K.sum(flat_prediction)
         denominator     = sum_truth + sum_prediction + self.constant
-        iou             = numerator / denominator
-        return iou
+        dice            = numerator / denominator
+        return dice
 
     def loss(self, truth, prediction):
-        return -self.iou(truth, prediction)
+        return -self.dice(truth, prediction)
 

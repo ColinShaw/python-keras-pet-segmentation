@@ -2,7 +2,7 @@ from keras.applications import VGG16
 from keras.layers       import Conv2D, Conv2DTranspose, Add
 from keras.models       import Model as KerasModel
 from keras.optimizers   import Adam
-from iou                import IOU
+from dice               import Dice
 
 
 class Model(object):
@@ -38,13 +38,13 @@ class Model(object):
         a1 = Add()([t2, c1])
         t1 = Conv2DTranspose(1, 4, strides=(2,2), padding='same')(a1)
 
-        m = KerasModel(inputs=vgg16.input, outputs=t1)
-        i = IOU(1.0)
+        m = KerasModel(inputs=[vgg16.input], outputs=[t1])
+        d = Dice(1.0)
 
         m.compile(
             optimizer = Adam(lr=1e-5), 
-            loss      = i.loss, 
-            metrics   = [i.iou]
+            loss      = d.loss, 
+            metrics   = [d.dice]
         )
 
         return m

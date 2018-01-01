@@ -17,9 +17,9 @@ class Train(object):
         m.fit_generator(
             generator        = g.train(32),
             steps_per_epoch  = 100,
-            epochs           = 30,
+            epochs           = 10,
             validation_data  = g.valid(32),
-            validation_steps = 10,
+            validation_steps = 2,
             callbacks        = [c]
         )
 
