@@ -36,9 +36,10 @@ case with the skip-layer model, we are simply summing the various scales to
 achieve a result that reinforces regions at any scale that cummulatively have
 the features we are looking for.  Constrast this with something like U-Net that
 superficially looks very similar, but is actually concatenating the outputs
-of the transpose convolution layers.  The U-Net approach results in significantly
-more trainable parameters with a different dynamic with regard to how it 
-segments the image.
+of the transpose convolution layers.  Reason for this is the use of multiple
+convolution outputs that cause problems in tensor shape using addition.  The U-Net 
+approach results in significantly more trainable parameters, resulting in the
+potential for better segmentation at the expense of more training.
 
 One thing that is critical is to use a good metric for loss so that the model 
 trains well.  This can be accomplished several ways. It is actually possible 
@@ -57,7 +58,7 @@ same general goal.  The benefit is that the dice metric is able to be
 implemented with vectorized code easily.
 
 
-Some papers on the topic of segmentation in general might be:
+Information on the topic of segmentation in general might be:
   
   * [Learning to Segment Every Thing](https://arxiv.org/pdf/1711.10370.pdf)
 
@@ -73,9 +74,11 @@ Some similar concept reference implementations might be:
   * [Image Segmentation Keras: Implementation of Segnet, FCN, UNet and other models in Keras](https://github.com/divamgupta/image-segmentation-keras)
 
 
-Some papers regarding different choices for loss function might be:
+Regarding different choices for loss function might be:
 
   * [Generalised Dice overlap as a deep learning loss function for highly unbalanced segmentations](https://arxiv.org/pdf/1707.03237.pdf)
+
+  * [Sørensen–Dice coefficient](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient)
 
 
 
