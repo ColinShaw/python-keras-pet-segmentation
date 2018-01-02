@@ -3,6 +3,9 @@ from keras import backend as K
 
 class Metric(object):
 
+    '''
+    Related to Dice coefficient
+    '''
     def dice_init(self, constant):
         self.constant = constant
         return self
@@ -21,6 +24,10 @@ class Metric(object):
     def dice_loss(self, truth, prediction):
         return -self.dice(truth, prediction)
 
+
+    '''
+    Related to cross entropy
+    '''
     def cross(self, truth, prediction):
         flat_truth      = K.flatten(truth)
         flat_prediction = K.flatter(prediction)

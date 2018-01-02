@@ -7,20 +7,20 @@ class Train(object):
 
     @staticmethod
     def oxford():
-        m = Model().skip_layer_vgg16()
-        g = Generator()
-        c = ModelCheckpoint(
+        model      = Model().skip_layer_vgg16()
+        generator  = Generator()
+        checkpoint = ModelCheckpoint(
             filepath       = 'model_weights.h5', 
             verbose        = True, 
             save_best_only = True
         )
-        m.fit_generator(
-            generator        = g.train(32),
+        model.fit_generator(
+            generator        = generator.train(32),
             steps_per_epoch  = 100,
             epochs           = 10,
-            validation_data  = g.valid(32),
+            validation_data  = generator.valid(32),
             validation_steps = 2,
-            callbacks        = [c]
+            callbacks        = [checkpoint]
         )
 
 

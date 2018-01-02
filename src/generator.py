@@ -14,7 +14,7 @@ class Generator(object):
         self.__valid = Oxford().valid()
 
     def __augment_rotation(self, image):
-        angle = np.random.uniform(-30, 30)
+        angle = np.random.uniform(-45, 45)
         image = imrotate(image, angle) 
         return image
 
@@ -26,8 +26,8 @@ class Generator(object):
         return image
 
     def __augment_translation(self, image):
-        rand_x = np.random.uniform(-40, 40)
-        rand_y = np.random.uniform(-40, 40)
+        rand_x = np.random.uniform(-80, 80)
+        rand_y = np.random.uniform(-80, 80)
         scale  = np.float32([[1,0,rand_x], [0,rand_y,0]])
         image  = cv2.warpAffine(image, scale, (224,224))
         return image
@@ -46,31 +46,46 @@ class Generator(object):
         image = np.reshape(image, (224,224,1))
         return image
 
+    def __make_zeros(self, batch_size):
+        features = np.zeros((batch_size,224,224,3))
+        labels   = np.zeros((batch_size,224,224,1))
+        return features, labels
+
+    def __augmented_train_feature(self, i):
+        feature = self.__train[i][0]
+        feature = self.__augment_feature(feature)
+        return feature    
+
+    def __augmented_train_label(self, i):
+        label = self.__train[i][1]
+        label = self.__augment_label(label)
+        return label
+
+    def __augmented_valid_feature(self, i):
+        feature = self.__valid[i][0]
+        feature = self.__augment_feature(feature)
+        return feature
+
+    def __augmented_valid_label(self, i):
+        label = self.__valid[i][1]
+        label = self.__augment_label(label)
+        return label
+
     def train(self, batch_size):
         while True:
             random.shuffle(self.__train)
-            features = np.zeros((batch_size,224,224,3))
-            labels   = np.zeros((batch_size,224,224,1))
+            features, labels = self.__make_zeros(batch_size)
             for i in range(batch_size):
-                feature = self.__train[i][0]
-                feature = self.__augment_feature(feature)
-                features[i] = feature
-                label = self.__train[i][1]
-                label = self.__augment_label(label)
-                labels[i] = label
+                features[i] = self.__augmented_train_feature(i)
+                labels[i]   = self.__augmented_train_label(i)
             yield features, labels
 
     def valid(self, batch_size):
         while True:
             random.shuffle(self.__valid)
-            features = np.zeros((batch_size,224,224,3))
-            labels   = np.zeros((batch_size,224,224,1))
+            features, labels = self.__make_zeros(batch_size)
             for i in range(batch_size):
-                feature = self.__valid[i][0]
-                feature = self.__augment_feature(feature)
-                features[i] = feature
-                label = self.__valid[i][1]
-                label = self.__augment_label(label)
-                labels[i] = label
+                features[i] = self.__augmented_valid_feature(i)
+                labels[i]   = self.__augmented_valid_label(i)
             yield features, labels
 
