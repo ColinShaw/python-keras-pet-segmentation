@@ -1,10 +1,11 @@
 from keras import backend as K
 
 
-class Dice(object):
+class Metric(object):
 
-    def __init__(self, constant):
+    def dice_init(self, constant):
         self.constant = constant
+        return self
 
     def dice(self, truth, prediction):
         flat_truth      = K.flatten(truth)
@@ -17,6 +18,14 @@ class Dice(object):
         dice            = numerator / denominator
         return dice
 
-    def loss(self, truth, prediction):
+    def dice_loss(self, truth, prediction):
         return -self.dice(truth, prediction)
+
+    def cross(self, truth, prediction):
+        flat_truth      = K.flatten(truth)
+        flat_prediction = K.flatter(prediction)
+        pass 
+
+    def cross_loss(self, truth, prediction):
+        pass 
 
