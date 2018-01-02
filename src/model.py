@@ -107,10 +107,10 @@ class Model(object):
             inputs  = [vgg16.input], 
             outputs = [output]
         )
-        metric = Metric().dice_init(1.0)
+        metric = Metric().dice_init(1e-5)
 
         model.compile(
-            optimizer = Adam(lr=1e-5), 
+            optimizer = Adam(lr=1e-6), 
             loss      = metric.dice_loss, 
             metrics   = [metric.dice]
         )

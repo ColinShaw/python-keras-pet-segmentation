@@ -39,10 +39,16 @@ class Generator(object):
         image = np.reshape(image, (224,224,3))
         image = preprocess_input(image.astype(np.float32))
         return image
+
+    def __preprocess_label(self, image):
+        image = image.astype(np.float32)
+        image = image / 255.0
+        return image
  
     def __augment_label(self, image):
         image = self.__augment_rotation(image)
         image = self.__augment_translation(image)
+        image = self.__preprocess_label(image)
         image = np.reshape(image, (224,224,1))
         return image
 

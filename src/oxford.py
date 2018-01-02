@@ -1,4 +1,5 @@
 import os
+import random
 import numpy  as np
 from   loader import Loader
 
@@ -15,23 +16,25 @@ class Oxford(Loader):
         images = [f for f in dirlist if 'jpg' in f]
         for image in images:
             image   = os.path.splitext(image)[0]
-            feature = self.load_image('data/oxford_iiit/images/{}.jpg'.format(image))
             label   = self.load_image('data/oxford_iiit/trimaps/{}.png'.format(image))
+            feature = self.load_image('data/oxford_iiit/images/{}.jpg'.format(image))
+            if len(feature.shape) < 3:
+                feature = np.dstack((feature,feature,feature))
             self.__data.append((feature, label))
+        random.shuffle(self.__data)
 
-    def __scale_label(self, label):
-        label[label > 2]   = 1.0
-        label[label < 255] = 0.0
-        return label.astype(np.float32)
+    def __label_threshold(self, label):
+        label[label > 2]   = 255
+        label[label < 255] = 0
+        return label
 
     def train(self):
         data     = [] 
         features = [] 
         labels   = []
-        for i in range(0, 200):
+        for i in range(0, 5000):
             feature = self.__data[i][0]
-            label   = self.__data[i][1]
-            label   = self.__scale_label(label)
+            label   = self.__label_threshold(self.__data[i][1])
             data.append((feature, label))
         return data
 
@@ -39,10 +42,9 @@ class Oxford(Loader):
         data     = []
         features = [] 
         labels   = []
-        for i in range(200, 250):
+        for i in range(5000, 6000):
             feature = self.__data[i][0]
-            label   = self.__data[i][1]
-            label   = self.__scale_label(label)
+            label   = self.__label_threshold(self.__data[i][1])
             data.append((feature, label))
         return data
 

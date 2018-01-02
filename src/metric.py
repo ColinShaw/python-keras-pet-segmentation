@@ -30,7 +30,7 @@ class Metric(object):
     '''
     def cross(self, truth, prediction):
         flat_truth      = K.flatten(truth)
-        flat_prediction = K.flatter(prediction)
+        flat_prediction = K.flatten(prediction)
         pass 
 
     def cross_loss(self, truth, prediction):
