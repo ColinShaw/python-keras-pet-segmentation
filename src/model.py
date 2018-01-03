@@ -96,23 +96,23 @@ class Model(object):
             padding     = 'same'
         )(a1)
 
-        output = Conv2D(
+        c0 = Conv2D(
             filters     = 1, 
             kernel_size = (1,1), 
             padding     = 'same',
-            activation  = 'sigmoid'
+            activation  = 'tanh'
         )(t1)
 
         model = KerasModel(
             inputs  = [vgg16.input], 
-            outputs = [output]
+            outputs = [c0]
         )
-        metric = Metric().dice_init(1e-5)
+        metric = Metric().dice_init(1e-3)
 
         model.compile(
-            optimizer = Adam(lr=1e-6), 
-            loss      = metric.dice_loss, 
-            metrics   = [metric.dice]
+            optimizer = Adam(lr=1e-4), 
+            loss      = 'mse',    # metric.dice_loss
+            metrics   = ['mse']   # metric.dice_coef
         )
 
         return model
