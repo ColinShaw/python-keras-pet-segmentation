@@ -14,8 +14,8 @@ if args.train and args.oxford:
     from src.train  import Train
     Train().oxford()
 elif args.verify:
-    from src.verify import Verify
-    Verify().verify()
+    from src.predict import Predict
+    Predict().segmentation()
 elif args.clean:
     from src.clean import Clean
     Clean().clean()
