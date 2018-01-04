@@ -26,7 +26,8 @@ class Model(object):
             filters     = 1, 
             kernel_size = (1,1), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d5)
         d5 = Dropout(DROPOUT_VALUE)(c5)
         t5 = Conv2DTranspose(
@@ -34,7 +35,8 @@ class Model(object):
             kernel_size = (2,2), 
             strides     = (2,2), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d5)
 
         v4 = vgg16.get_layer('block4_pool')
@@ -43,7 +45,8 @@ class Model(object):
             filters     = 1 ,
             kernel_size = (1,1), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d4)
         a4 = Add()([t5, c4])
         d4 = Dropout(DROPOUT_VALUE)(a4)
@@ -52,7 +55,8 @@ class Model(object):
             kernel_size = (2,2), 
             strides     = (2,2), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d4)
 
         v3 = vgg16.get_layer('block3_pool')
@@ -61,7 +65,8 @@ class Model(object):
             filters     = 1, 
             kernel_size = (1,1), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d3)
         a3 = Add()([t4, c3])
         d3 = Dropout(DROPOUT_VALUE)(a3)
@@ -70,7 +75,8 @@ class Model(object):
             kernel_size = (2,2), 
             strides     = (2,2), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d3)
 
         v2 = vgg16.get_layer('block2_pool')
@@ -79,7 +85,8 @@ class Model(object):
             filters     = 1, 
             kernel_size = (1,1), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d2)
         a2 = Add()([t3, c2])
         d2 = Dropout(DROPOUT_VALUE)(a2)
@@ -88,7 +95,8 @@ class Model(object):
             kernel_size = (2,2), 
             strides     = (2,2), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d2)
 
         v1 = vgg16.get_layer('block1_pool')
@@ -97,7 +105,8 @@ class Model(object):
             filters     = 1, 
             kernel_size = (1,1), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d1)
         a1 = Add()([t2, c1])
         d1 = Dropout(DROPOUT_VALUE)(a1)
@@ -106,7 +115,8 @@ class Model(object):
             kernel_size = (2,2), 
             strides     = (2,2), 
             activation  = 'relu',
-            padding     = 'same'
+            padding     = 'same',
+            use_bias    = False
         )(d1)
 
         d0 = Dropout(DROPOUT_VALUE)(t1)
@@ -114,7 +124,8 @@ class Model(object):
             filters     = 1, 
             kernel_size = (1,1), 
             padding     = 'same',
-            activation  = 'tanh'
+            activation  = 'tanh',
+            use_bias    = False
         )(d0)
 
         model = KerasModel(
